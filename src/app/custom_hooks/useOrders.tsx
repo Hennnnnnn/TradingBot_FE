@@ -3,8 +3,10 @@ import { Order } from "../types/types";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
-
+  const API_URL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3001"
+      : "https://tradingbotbe-production.up.railway.app";
   const loadOrders = async () => {
     try {
       const response = await fetch(`${API_URL}/orders`);

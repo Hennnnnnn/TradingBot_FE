@@ -10,8 +10,11 @@ export const useWebhook = () => {
     adx: 0,
     timeframe: "",
   });
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
-
+  const API_URL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3001"
+      : "https://tradingbotbe-production.up.railway.app";
+      
   const handleInputChange = (field: keyof Webhook, value: string) => {
     setWebhook((prev) => ({
       ...prev,
