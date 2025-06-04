@@ -10,6 +10,7 @@ export const useWebhook = () => {
     adx: 0,
     timeframe: "",
   });
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
   const handleInputChange = (field: keyof Webhook, value: string) => {
     setWebhook((prev) => ({
@@ -32,7 +33,7 @@ export const useWebhook = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3001/webhook", {
+      const response = await fetch(`${API_URL}/webhook`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +47,7 @@ export const useWebhook = () => {
         console.log("Error");
       }
 
-      return response.status === 200
+      return response.status === 200;
     } catch (error) {
       console.log(error);
     }

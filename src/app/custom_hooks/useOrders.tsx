@@ -3,10 +3,11 @@ import { Order } from "../types/types";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
   const loadOrders = async () => {
     try {
-      const response = await fetch("http://localhost:3001/orders");
+      const response = await fetch(`${API_URL}/orders`);
       if (response.ok) {
         const data = await response.json();
         setOrders(data);
@@ -18,7 +19,7 @@ export const useOrders = () => {
 
   const clearOrders = async () => {
     try {
-      const response = await fetch("http://localhost:3001/orders", {
+      const response = await fetch(`${API_URL}}/orders`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

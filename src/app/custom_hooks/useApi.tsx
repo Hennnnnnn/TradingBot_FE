@@ -5,6 +5,8 @@ export const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
   const showMessage = (msg: string) => {
     setMessage(msg);
     setTimeout(() => setMessage(""), 3000);
@@ -12,7 +14,7 @@ export const useApi = () => {
 
   const loadActiveConfig = async () => {
     try {
-      const response = await fetch("http://localhost:3001/config");
+      const response = await fetch(`${API_URL}/config`);
       if (response.ok) {
         return await response.json();
       }
@@ -25,7 +27,7 @@ export const useApi = () => {
   const saveConfig = async (config: Config) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3001/config", {
+      const response = await fetch(`${API_URL}/config`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +45,9 @@ export const useApi = () => {
         return null;
       }
     } catch (error) {
-      showMessage("Error: " + (error instanceof Error ? error.message : "Unknown error"));
+      showMessage(
+        "Error: " + (error instanceof Error ? error.message : "Unknown error")
+      );
       setLoading(false);
       return null;
     }
